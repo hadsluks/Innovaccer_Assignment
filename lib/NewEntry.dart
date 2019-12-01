@@ -33,7 +33,6 @@ class _NewEntryState extends State<NewEntry> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Stack(
@@ -202,50 +201,63 @@ class _NewEntryState extends State<NewEntry> {
                               )
                             ],
                           ),
-                          RaisedButton(
-                            child: Text("Generate Entry"),
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                setState(() {
-                                  entryGenerated = true;
-                                  generatingEntry = true;
-                                });
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              RaisedButton(
+                                child: Text("Reset"),
+                                onPressed: () {
+                                  vname = null;
+                                  vemail = null;
+                                  vphone = null;
+                                  hname = null;
+                                  hemail = null;
+                                  hphone = null;
+                                  entry = null;
+                                  entryID = null;
+                                  entryGenerated = false;
+                                  generatingEntry = false;
+                                  setState(() {});
+                                },
+                              ),
+                              RaisedButton(
+                                child: Text("Generate Entry"),
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    setState(() {
+                                      entryGenerated = true;
+                                      generatingEntry = true;
+                                    });
 
-                                await Firestore.instance
-                                    .collection('entries')
-                                    .getDocuments()
-                                    .then((d) {
-                                  entryID = d.documents.length + 1;
-                                });
-                                setState(() {});
-                                entry=DateTime.now();
-                                Firestore.instance
-                                    .collection('entries')
-                                    .document()
-                                    .setData({
-                                  'entry_id': entryID,
-                                  'visitor_name': '$vname',
-                                  'visitor_email': '$vemail',
-                                  'visitor_phone': '$vphone',
-                                  'host_name': '$hname',
-                                  'host_email': '$hemail',
-                                  'host_phone': '$hphone',
-                                  'entry_time' : '${entry.toIso8601String().substring(0,19)}'
-                                });
-                              }
-                              setState(() {
-                                generatingEntry = false;
-                              });
-                              /* final temp=await getTemporaryDirectory();
-                 */
-                              /* email = Email(
-                  recipients: [vemail],
-                  subject: "Test Email",
-                  body:
-                      "Hello $vname\n You have made an entry to Innovaccer at ${DateTime.now().toUtc().toString().substring(0, 19)}\nThank You",
-                );
-                await FlutterEmailSender.send(email); */
-                            },
+                                    await Firestore.instance
+                                        .collection('entries')
+                                        .getDocuments()
+                                        .then((d) {
+                                      entryID = d.documents.length + 1;
+                                    });
+                                    setState(() {});
+                                    entry = DateTime.now();
+                                    Firestore.instance
+                                        .collection('entries')
+                                        .document()
+                                        .setData({
+                                      'entry_id': entryID,
+                                      'visitor_name': '$vname',
+                                      'visitor_email': '$vemail',
+                                      'visitor_phone': '$vphone',
+                                      'host_name': '$hname',
+                                      'host_email': '$hemail',
+                                      'host_phone': '$hphone',
+                                      'entry_time':
+                                          '${entry.toIso8601String().substring(0, 19)}'
+                                    });
+                                  }
+                                  setState(() {
+                                    generatingEntry = false;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -444,6 +456,22 @@ class _NewEntryState extends State<NewEntry> {
                                 },
                               )
                             ],
+                          ),
+                          RaisedButton(
+                            child: Text("Reset"),
+                            onPressed: () {
+                              vname = null;
+                              vemail = null;
+                              vphone = null;
+                              hname = null;
+                              hemail = null;
+                              hphone = null;
+                              entry = null;
+                              entryID = null;
+                              entryGenerated = false;
+                              generatingEntry = false;
+                              setState(() {});
+                            },
                           ),
                         ],
                       ),

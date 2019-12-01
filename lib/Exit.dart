@@ -251,6 +251,23 @@ class _ExitState extends State<Exit> {
                     ],
                   )
                 : SizedBox(),
+            RaisedButton(
+              child: Text("Reset"),
+              onPressed: () {
+                vname = null;
+                vemail = null;
+                vphone = null;
+                hname = null;
+                hemail = null;
+                hphone = null;
+                entry = null;
+                exit=null;
+                entryID = null;
+                entryGranted=false;
+                gotEntryID=false;
+                setState(() {});
+              },
+            ),
           ],
         ),
       ),

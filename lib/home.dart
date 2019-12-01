@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[NewEntry(), Exit()],
+          children: <Widget>[new NewEntry(), new Exit()],
         ),
       ),
     );
